@@ -1,93 +1,92 @@
 import msvcrt
+class Nodo(): #Se crea el Nodo
+    def __init__(self, datoN,datoA,datoC): #Metodo consutructor al cual le vamos a pasar los datos
+        self.datoN=datoN #Hacemos referencia al dato
+        self.datoA=datoA #Hacemos referencia al dato
+        self.datoC=datoC #Hacemos referencia al dato
+        self.siguiente=None #Apuntador Siguiente que sera Vacia(None)
+        self.anterior=None #Apuntador Siguiente que sera Vacia(None)
 
-class Nodo():
-    def __init__(self, datoN,datoA,datoC):
-        self.datoN=datoN
-        self.datoA=datoA
-        self.datoC=datoC
-        self.siguiente=None
-        self.anterior=None
+class listaDobleEnlazada(): #Creamos nuetra Lista Doblemente Enlazada
+    def __init__(self): #Metodo constructor para los Nodos
+        self.primero=None #Hacemos referencia de que el primero estara Vacia(none)
+        self.ultimo=None #Hacemos referencia de que el primero estara Vacia(none)
+        self.size=0 #Tamaño de la Lista Doblemente Enlazada
 
-class listaDobleEnlazada():
-    def __init__(self):
-        self.primero=None
-        self.ultimo=None
-        self.size=0
+    def vacia(self): #Metodo constructor vacio
+        return self.primero==None #Validamos si nuestra lista esta vacia cuando primero esta vacio
 
-    def vacia(self):
-        return self.primero==None
-
-    def agregar_final(self,datoN,datoA,datoC):
-        if self.vacia():
-            self.primero=self.ultimo=Nodo(datoN,datoA,datoC)
+    def agregar_final(self,datoN,datoA,datoC): #Metodo constructor de Agregar los Nodos al Final de la lista
+        if self.vacia(): #Comprobamos si la lista esta vacia
+            self.primero=self.ultimo=Nodo(datoN,datoA,datoC) #Agregamos el Nodo apuntando a primero y ultimo
             print()
             print("---------------------------------")
             print("Agregado al Final")
-        else:
-            aux=self.ultimo
-            self.ultimo=aux.siguiente=Nodo(datoN,datoA,datoC)
-            self.ultimo.anterior=aux
+        else: #La lista no esta vacia
+            aux=self.ultimo #Almacenos el ultimo nodo en una variable temporal
+            self.ultimo=aux.siguiente=Nodo(datoN,datoA,datoC) #Apuntamos el ultimo nodo al nuevno nodo como su siguiente y de que sera el ultimo
+            self.ultimo.anterior=aux #Apuntamos el ultimo nodo al nodo anterior
             print()
             print("---------------------------------")
             print("Agregado al Final")
         self.size+=1
 
-    def agregar_inicio(self,datoN,datoA,datoC):
-        if self.vacia():
-            self.primero=self.ultimo=Nodo(datoN,datoA,datoC)
+    def agregar_inicio(self,datoN,datoA,datoC): #Metodo constructor de Agregar los Nodos al Inicio de la lista
+        if self.vacia(): #Comprobamos si la lista esta vacia
+            self.primero=self.ultimo=Nodo(datoN,datoA,datoC) #Agregamos el Nodo apuntando a primero y ultimo
             print()
             print("---------------------------------")
             print("Agregado al Inicio")
-        else:
-            aux=Nodo(datoN,datoA,datoC)
-            aux.siguiente=self.primero
-            self.primero.anterior=aux
-            self.primero=aux
+        else: #La lista no esta vacia
+            aux=Nodo(datoN,datoA,datoC) #Almacenamos los datos en una variable temporal
+            aux.siguiente=self.primero #Apuntamos el nuevo nodo al primer nodo como su siguiente
+            self.primero.anterior=aux #Apuntamos el primer nodo al nuevo nodo como su anterior
+            self.primero=aux #Ahora hacemos de que el nodo nuevo pase hacer el primero
             print()
             print("---------------------------------")
             print("Agregado al Inicio")
         self.size+=1
 
-    def eliminar_inicio(self):
-        if self.vacia():
-            print("Esta vacia")
-        elif self.primero.siguiente==None:
-            self.primero=self.ultimo=None
+    def eliminar_inicio(self): #Metodo constructor eliminar inicio
+        if self.vacia(): #Validando si la lista esta vacia
+            print("Esta vacia") 
+        elif self.primero.siguiente==None: #Si solo hay un nodo en la lista
+            self.primero=self.ultimo=None #primero y ultimo sera igual a none
             print("Primer Nodo Eliminado")
-            self.size=0
-        else:
-            self.primero=self.primero.siguiente
-            self.primero.anterior=None
+            self.size=0 #Valor de lalista a 0
+        else: #La lista tiene varios nodos
+            self.primero=self.primero.siguiente #Colocando como primero al nodo siguiente del nodo
+            self.primero.anterior=None #El anterior del primer nodo sera none
             print("Primer Nodo Eliminado")
-            self.size-=1
+            self.size-=1 #Reduciendo el valor de la lista
 
-    def eliminar_final(self):
-        if self.vacia():
+    def eliminar_final(self): #Metodo constructor para eliminar final
+        if self.vacia(): #Si la lista esta vacia
             print("Esta vacia")
-        elif self.primero.siguiente==None:
-            self.primero=self.ultimo=None
+        elif self.primero.siguiente==None: #Si la lista tiene un solo nodo
+            self.primero=self.ultimo=None #primero y ultimo sera igual a none
             print("Nodo Final Eliminado")
-            self.size=0
-        else:
-            self.ultimo=self.ultimo.anterior
-            self.ultimo.siguiente=None
+            self.size=0 #Valor de la lista a 0
+        else: #La lista tiene varios nodos
+            self.ultimo=self.ultimo.anterior #Colocando como ultimo al nodo anterior del nodo
+            self.ultimo.siguiente=None #El anterior del primer nodo sera none
             print("Nodo Final Eliminado")
-            self.size-=1
+            self.size-=1 #Reduciendo el valor de la lista
         
-    def recorrer_inicio(self):
-        aux=self.primero
-        while aux:
-            print(aux.datoN,aux.datoA,aux.datoC)
-            aux=aux.siguiente
+    def recorrer_inicio(self): #Metodo constructor para recorrer la lista de Inicio a Fin
+        aux=self.primero #Almacenando al primero en una variable temporal
+        while aux: #Se repetira mientras sea verdadero
+            print(aux.datoN,aux.datoA,aux.datoC) #Imprimir los datos
+            aux=aux.siguiente #Almacenando el nodo siguiente a la variable temporal
 
-    def recorrer_fin(self):
-        aux=self.ultimo
-        while aux:
-            print(aux.datoN,aux.datoA,aux.datoC)
-            aux=aux.anterior
+    def recorrer_fin(self): #Metodo constructor para recorrer la lista de Fin a Inicio
+        aux=self.ultimo #Almacenando al ultimo en una variable temporal
+        while aux: #Se repetira mientras sea verdadero
+            print(aux.datoN,aux.datoA,aux.datoC) #Imprimir los datos
+            aux=aux.anterior #Almacenando el nodo anterior a la variable temporal
 
-    def size(self):
-        return self.size
+    def size(self): #Metodo constructor para el temaño de la lista
+        return self.size #retornando el valor/tamaño de la lista
 
 lista=listaDobleEnlazada()
 
